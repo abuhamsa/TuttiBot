@@ -10,20 +10,34 @@ namespace TuttiBot
     internal class DeliveryHandler
     {
 
-
-        public void load_search_data_json (string file_path)
+        public List<SearchIds> loadAllNotifiedIds()
         {
+            List<SearchIds> allNotfiedSearches = JsonConvert.DeserializeObject<List<SearchIds>>("jsonstring");
+            return allNotfiedSearches;
+        }
+
+        public List<int> getNotifiedIdsFromOneSearch (List<SearchIds> allNotfiedSearches, string searchTerm)
+        {
+             foreach (SearchIds searchIds in allNotfiedSearches)
+            {
+                if (searchIds.searchTerm.Equals(searchTerm))
+                {
+                    return searchIds.ids;
+                }
+
+            }
+
+            return null;
 
         }
 
-        public void test_dump_json()
+      
+        // Muss noch komplett überdenkt werden
+        public void addNewNotifiedIds (string search,List <int> notified_ids,string file_path, List<SearchIds> new_ids)
         {
-            
-        }
+            if (search.Equals(new_ids[0].searchTerm)){
 
-        public void dump_search_data_json (string search,List <int> notified_ids,string file_path)
-        {
-            
+            }
 
         }
 
@@ -37,7 +51,7 @@ namespace TuttiBot
         public void sendNewOffersPushover(List<Offer> offers)
         {
             Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
-            List<int> notified_ids = this.getNotifiedIds("blub","blo");
+            List<int> notified_ids = this.load_notifiedids_from_json("filepath","searchterm");
 
             List<int> complete_ids = new List<int>();
             foreach (Offer offer in offers)
@@ -59,8 +73,6 @@ namespace TuttiBot
 
             string search = "";
             string file_path = "";
-
-            dump_search_data_json( search, unnotified_ids,  file_path);
 
         }
 

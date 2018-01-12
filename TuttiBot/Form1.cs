@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,14 +23,7 @@ namespace TuttiBot
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /* Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG","ae965hsnhmamdo12wcpmxw75fto72a");
-             pushover.sendText(textBox2.Text,textBox1.Text);
-             Offer offer = new Offer();*/
-            DeliveryHandler deliveryHandler = new DeliveryHandler();
-            deliveryHandler.test_dump_json();
-
-
-
+            
         }
 
         private async void button2_Click(object sender, EventArgs e)
