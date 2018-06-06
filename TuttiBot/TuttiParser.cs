@@ -105,7 +105,9 @@ namespace TuttiBot
                 offer.offer_id = sanitize(node.SelectSingleNode("../@id").Id);
                 offer.published = sanitize(node.SelectSingleNode("./em[@class='fl in-date']").InnerText);
                 offer.price = sanitize(node.SelectSingleNode("./ span[@class = 'fl in-price']").InnerText);
-                offer.thumb_url = sanitize(node.SelectSingleNode("./div[@class='li-thumb fl in-thumb']/a/img/@src").GetAttributeValue("src", string.Empty));
+                //Debugging
+                //offer.thumb_url = sanitize(node.SelectSingleNode("./div[@class='li-thumb fl in-thumb']/a/img/@src").GetAttributeValue("src", string.Empty));
+                offer.thumb_url = "test";
 
                 //IN "CLASS=FL IN-INFO"-DIV ARE THE INFOS FOR TITLE,DESCRITPION AND LINK
                 var info_node = node.SelectSingleNode("./div[@class='fl in-info']");
@@ -114,7 +116,7 @@ namespace TuttiBot
                 offer.link = sanitize(info_node.SelectSingleNode("./h3[@class='in-title']/a/@href").GetAttributeValue("href", string.Empty));
 
                 offers.Add(offer);
-                Console.WriteLine(offer.ToString());
+               // Console.WriteLine(offer.ToString());
                 
             }
 

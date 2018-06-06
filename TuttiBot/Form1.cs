@@ -23,6 +23,8 @@ namespace TuttiBot
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+
             
         }
 
@@ -30,17 +32,18 @@ namespace TuttiBot
         {
             TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + textBox3.Text);
             List<Offer> offers = tuttiParser.loadNextract();
-            Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
-            pushover.sendText(offers[0].title, offers[0].ToString());
+            //Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
+            //pushover.sendText(offers[0].title, offers[0].ToString());
 
-            DeliveryHandler deliveryHandler = new DeliveryHandler();
+            OldDeliveryHandlerJson deliveryHandler = new OldDeliveryHandlerJson();
+            deliveryHandler.sendNewOffersPushover(offers, textBox3.Text);
 
-           
+
            /* foreach (Offer offer in offers)
             {
                 pushover.sendText(offer.title, offer.ToString());               
             }*/
-            
+
 
         }
     }
