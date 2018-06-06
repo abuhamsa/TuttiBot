@@ -87,13 +87,12 @@ namespace TuttiBot
         }
 
         //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK
-        //TESTKOMMENTAR11111111
         public List<Offer> loadNextract()
         {
             var url = this.url;
             var web = new HtmlWeb();
             var doc = web.Load(url);
-            HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='in-click-th cf']");
+            HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='_228GQ _3HmX7']");
 
             List<Offer> offers = new List<Offer>();
 
@@ -103,8 +102,8 @@ namespace TuttiBot
                 Offer offer = new Offer();
 
                 //IN "CLASS=IN-CLICK-TH CF"-DIV ARE THE INFOS FOR ID, PUBLISHED, PRICE, THUMB
-                offer.offer_id = sanitize(node.SelectSingleNode("../@id").Id);
-                offer.published = sanitize(node.SelectSingleNode("./em[@class='fl in-date']").InnerText);
+                offer.offer_id = sanitize(node.SelectSingleNode("./div[@class='_1abn1 _2KsM3']").Id);
+                offer.published = sanitize(node.SelectSingleNode("./div/div[1]/div[@class='_2k8P4']").InnerText);
                 offer.price = sanitize(node.SelectSingleNode("./ span[@class = 'fl in-price']").InnerText);
                 //Debugging
                 //offer.thumb_url = sanitize(node.SelectSingleNode("./div[@class='li-thumb fl in-thumb']/a/img/@src").GetAttributeValue("src", string.Empty));
