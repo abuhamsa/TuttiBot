@@ -87,7 +87,7 @@ namespace TuttiBot
         }
 
         //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK
-        //TESTKOMMENTAR
+        //TESTKOMMENTAR11111111
         public List<Offer> loadNextract()
         {
             var url = this.url;
