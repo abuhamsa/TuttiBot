@@ -1,8 +1,14 @@
 ﻿using HtmlAgilityPack;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using ScrapySharp.Network;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace TuttiBot
 {
@@ -17,34 +23,53 @@ namespace TuttiBot
 
         //ONLY FOR TESTING
         public void firsttest() {
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments(new List<string>() {
+            "--silent-launch",
+            "--no-startup-window",
+            "no-sandbox",
+            "headless",});
 
-            var url = this.url;
-            var web = new HtmlWeb();
-            var doc = web.Load(url);
-            HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='in-click-th cf']");
-
-            string offer_id = htmlNodes[0].SelectSingleNode("../@id").Id;
-            string published = htmlNodes[0].SelectSingleNode("./em[@class='fl in-date']").InnerText;
-            string price = htmlNodes[0].SelectSingleNode("./ span[@class = 'fl in-price']").InnerText;
-            string thumb_url = htmlNodes[0].SelectSingleNode("./div[@class='li-thumb fl in-thumb']/a/img/@src").GetAttributeValue("src", string.Empty);
-
-
-
-
-
-
-
-            //INFO_NODE PART
-            var info_node = htmlNodes[0].SelectSingleNode("./div[@class='fl in-info']");
-            string title = info_node.SelectSingleNode("./h3[@class='in-title']").InnerText;
-            string description = info_node.SelectSingleNode("./p[@class='in-text']").InnerText;
-            string link = info_node.SelectSingleNode("./h3[@class='in-title']/a/@href").GetAttributeValue("href", string.Empty);
-            Console.WriteLine(title);
-            Console.WriteLine(description);
-
-            string blub = "blah";
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;    // This is to hidden the console.
+            ChromeDriver driver = new ChromeDriver(chromeDriverService, chromeOptions);
+            driver.Navigate().GoToUrl(this.url);
+            String sourcetxt = driver.PageSource;
             
-    }
+            var doc = new HtmlDocument();
+            doc.LoadHtml(driver.PageSource);
+
+
+            HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='_228GQ _3HmX7']");
+
+            List<Offer> offers = new List<Offer>();
+
+            //RUNS FOR EVERY "CLASS=_228GQ _3HmX7"-DIV FOUND IN THE ROOT HTML
+            foreach (HtmlNode node in htmlNodes)
+            {
+                Offer offer = new Offer();
+
+                //IN "CLASS=_228GQ _3HmX7"-DIV ARE THE INFOS FOR ID, PUBLISHED, PRICE, THUMB, TITLE, DESCRIPTION, LINK
+                offer.offer_id = sanitize(node.SelectSingleNode("./div[@class='_1abn1 _2KsM3']").Id);
+                offer.published = sanitize(node.SelectSingleNode("//*[@id='" + offer.offer_id + "']/div/div[1]/div[2]/span").InnerText);
+                offer.price = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[3]/strong").InnerText);
+                offer.thumb_url = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/a/div/img/@src").GetAttributeValue("src", string.Empty));           
+                offer.title = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[2]/div/a/h4").InnerText);
+                offer.description = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[2]/div/p").InnerText);
+                offer.link = sanitize("https://tutti.ch" + node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[2]/div/a/@href").GetAttributeValue("href", string.Empty));
+
+
+
+                offers.Add(offer);
+                Console.WriteLine(offer.ToString());
+
+            }
+
+            Console.WriteLine("blahblubb");
+
+        }
+        
+
 
         //ONLY FOR TESTING
         public void multitest ()
@@ -89,34 +114,52 @@ namespace TuttiBot
         //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK
         public List<Offer> loadNextract()
         {
-            var url = this.url;
-            var web = new HtmlWeb();
-            var doc = web.Load(url);
+            //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments(new List<string>() {
+            "--silent-launch",
+            "--no-startup-window",
+            "no-sandbox",
+            "headless",});
+
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;    // This is to hidden the console.
+            ChromeDriver driver = new ChromeDriver(chromeDriverService, chromeOptions);
+            driver.Navigate().GoToUrl(this.url);
+            //TODO: SCROLLING MACHEN
+            var element = driver.FindElement(By.TagName("footer"));
+            Actions actions = new Actions(driver);
+            actions.MoveToElement(element);
+            actions.Perform();
+            //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN
+
+            //HTMLDOCUMENT VON HAP
+            var doc = new HtmlDocument();
+            doc.LoadHtml(driver.PageSource);
+
             HtmlNodeCollection htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='_228GQ _3HmX7']");
 
             List<Offer> offers = new List<Offer>();
 
-            //RUNS FOR EVERY "CLASS=IN-CLICK-TH CF"-DIV FOUND IN THE ROOT HTML
+            //RUNS FOR EVERY "CLASS=_228GQ _3HmX7"-DIV FOUND IN THE ROOT HTML
             foreach (HtmlNode node in htmlNodes)
             {
                 Offer offer = new Offer();
 
-                //IN "CLASS=IN-CLICK-TH CF"-DIV ARE THE INFOS FOR ID, PUBLISHED, PRICE, THUMB
+                //IN "CLASS=_228GQ _3HmX7"-DIV ARE THE INFOS FOR ID, PUBLISHED, PRICE, THUMB, TITLE, DESCRIPTION, LINK
                 offer.offer_id = sanitize(node.SelectSingleNode("./div[@class='_1abn1 _2KsM3']").Id);
-                offer.published = sanitize(node.SelectSingleNode("./div/div[1]/div[@class='_2k8P4']").InnerText);
-                offer.price = sanitize(node.SelectSingleNode("./ span[@class = 'fl in-price']").InnerText);
-                //Debugging
-                //offer.thumb_url = sanitize(node.SelectSingleNode("./div[@class='li-thumb fl in-thumb']/a/img/@src").GetAttributeValue("src", string.Empty));
-                offer.thumb_url = "test";
+                offer.published = sanitize(node.SelectSingleNode("//*[@id='" + offer.offer_id + "']/div/div[1]/div[2]/span").InnerText);
+                offer.price = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[3]/strong").InnerText);
+                offer.thumb_url = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/a/div/img/@src").GetAttributeValue("src", string.Empty));
+                offer.title = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[2]/div/a/h4").InnerText);
+                offer.description = sanitize(node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[2]/div/p").InnerText);
+                offer.link = sanitize("https://tutti.ch" + node.SelectSingleNode("//*[@id=" + offer.offer_id + "]/div/div[2]/div/a/@href").GetAttributeValue("href", string.Empty));
 
-                //IN "CLASS=FL IN-INFO"-DIV ARE THE INFOS FOR TITLE,DESCRITPION AND LINK
-                var info_node = node.SelectSingleNode("./div[@class='fl in-info']");
-                offer.title = sanitize(info_node.SelectSingleNode("./h3[@class='in-title']").InnerText);
-                offer.description = sanitize(info_node.SelectSingleNode("./p[@class='in-text']").InnerText);
-                offer.link = sanitize(info_node.SelectSingleNode("./h3[@class='in-title']/a/@href").GetAttributeValue("href", string.Empty));
+
+
 
                 offers.Add(offer);
-               // Console.WriteLine(offer.ToString());
+               Console.WriteLine(offer.ToString());
                 
             }
 
