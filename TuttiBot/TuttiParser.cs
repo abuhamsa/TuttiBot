@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TuttiBot
@@ -114,7 +115,7 @@ namespace TuttiBot
         //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK
         public List<Offer> loadNextract()
         {
-            //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN
+            //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN         
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments(new List<string>() {
             "--silent-launch",
@@ -126,11 +127,17 @@ namespace TuttiBot
             chromeDriverService.HideCommandPromptWindow = true;    // This is to hidden the console.
             ChromeDriver driver = new ChromeDriver(chromeDriverService, chromeOptions);
             driver.Navigate().GoToUrl(this.url);
-            //TODO: SCROLLING MACHEN
-            var element = driver.FindElement(By.TagName("footer"));
-            Actions actions = new Actions(driver);
-            actions.MoveToElement(element);
-            actions.Perform();
+            //SCROLLING 
+            IJavaScriptExecutor jse = (IJavaScriptExecutor)driver;
+            for (int second = 0; ; second++)
+            {
+                if (second >= 12)
+                {
+                    break;
+                }
+                jse.ExecuteScript("window.scrollBy(0, 480)", ""); //y value ‘800’ can be altered
+                Thread.Sleep(300);
+            }
             //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN
 
             //HTMLDOCUMENT VON HAP

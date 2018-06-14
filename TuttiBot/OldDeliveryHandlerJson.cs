@@ -98,7 +98,7 @@ namespace TuttiBot
                     if (unnotified_ids.Contains(Int32.Parse(offer.offer_id)))
                     {
 
-                        pushover.sendText(offer.title, offer.ToString());
+                        pushover.pushText(offer.title, offer.ToString());
                     }
                 }
 
@@ -121,7 +121,7 @@ namespace TuttiBot
                     if (unnotified_ids.Contains(Int32.Parse(offer.offer_id)))
                     {
 
-                        pushover.sendText(offer.title, offer.ToString());
+                        pushover.pushText(offer.title, offer.ToString());
                     }
                 }
 

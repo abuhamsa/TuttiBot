@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -32,17 +33,20 @@ namespace TuttiBot
         {
             TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + textBox3.Text);
             List<Offer> offers = tuttiParser.loadNextract();
-            //Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
+            Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
             //pushover.sendText(offers[0].title, offers[0].ToString());
 
-            OldDeliveryHandlerJson deliveryHandler = new OldDeliveryHandlerJson();
-            deliveryHandler.sendNewOffersPushover(offers, textBox3.Text);
+            //OldDeliveryHandlerJson deliveryHandler = new OldDeliveryHandlerJson();
+            //deliveryHandler.sendNewOffersPushover(offers, textBox3.Text);
+
+            //await pushover.pushImage( offers[0].ToString(),offers[0].thumb_url);
+           // Console.WriteLine("blub");
 
 
-           /* foreach (Offer offer in offers)
+            foreach (Offer offer in offers)
             {
-                pushover.sendText(offer.title, offer.ToString());               
-            }*/
+                await pushover.pushImage(offer.ToString(), offer.thumb_url);
+            }
 
 
         }

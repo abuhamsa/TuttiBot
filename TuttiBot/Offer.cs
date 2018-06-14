@@ -33,10 +33,10 @@
             string offerString;
 
             offerString = "ID: " + offer_id + "\r\n";
+            offerString += "Title: " + title + "\r\n";
             offerString += "Published: " + published + "\r\n";
             offerString += "Price: " + price + "\r\n";
-            offerString += "Thumb: " + thumb_url + "\r\n";
-            offerString += "Title: " + title + "\r\n";
+            //offerString += "Thumb: " + thumb_url + "\r\n";
             offerString += "Description: " + description + "\r\n";
             offerString += "Link: " + link + "\r\n";
             offerString += "\r\n";
