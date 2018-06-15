@@ -59,7 +59,7 @@ namespace TuttiBot
                     }
             }
 
-            //UPDATE THE ALREADYNOTIFIED-CONFIGFILE AFTER THE DELIVERY
+            //UPDATE THE ALREADYNOTIFIED-CONFIGFILE AFTER THE DELIVERY 
             searchIdsNotifyHandlerJson.updateAlreadyNotifiedIds(searchIdsNotifyHandlerJson.getUnnotifiedIds(offers));
 
            
