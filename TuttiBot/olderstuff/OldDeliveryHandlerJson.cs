@@ -12,7 +12,7 @@ namespace TuttiBot
     {
         private string confFile_path = "C:\\Users\\reberja\\Documents\\tuttibot\\searches.json";
         // Muss noch aus Datei geladen werden (filepath)
-        public List<SearchIds> loadAllNotifiedIds(string file_path)
+        public List<SearchIdsAndTerms> loadAllNotifiedIds(string file_path)
         {
             string jsonstring = File.ReadAllText(file_path);
             if (jsonstring == "")
@@ -21,13 +21,13 @@ namespace TuttiBot
                 return null;
             }
 
-            List<SearchIds> allNotfiedSearches = JsonConvert.DeserializeObject<List<SearchIds>>(jsonstring);
+            List<SearchIdsAndTerms> allNotfiedSearches = JsonConvert.DeserializeObject<List<SearchIdsAndTerms>>(jsonstring);
             return allNotfiedSearches;
         }
 
-        public List<int> getNotifiedIdsFromOneSearch (List<SearchIds> allNotfiedSearches, string searchTerm)
+        public List<int> getNotifiedIdsFromOneSearch (List<SearchIdsAndTerms> allNotfiedSearches, string searchTerm)
         {
-             foreach (SearchIds searchIds in allNotfiedSearches)
+             foreach (SearchIdsAndTerms searchIds in allNotfiedSearches)
             {
                 if (searchIds.searchTerm.Equals(searchTerm))
                 {
@@ -42,11 +42,12 @@ namespace TuttiBot
 
       
         // Muss noch in Datei gespeichert werden
-        public void addNewNotifiedIds (string search,List <int> notified_ids,string file_path)
+        public Boolean addNewNotifiedIds (string search,List <int> notified_ids,string file_path)
         {
-            List<SearchIds> nullSearchIds = new List<SearchIds>();
-            List<SearchIds> oldSearchIds = this.loadAllNotifiedIds(file_path);
-            SearchIds newSearchIds = new SearchIds(search, notified_ids);
+            if (notified_ids.Count == 0) { return false; }
+            List<SearchIdsAndTerms> nullSearchIds = new List<SearchIdsAndTerms>();
+            List<SearchIdsAndTerms> oldSearchIds = this.loadAllNotifiedIds(file_path);
+            SearchIdsAndTerms newSearchIds = new SearchIdsAndTerms(search, notified_ids);
 
             if (oldSearchIds == null)
             {
@@ -54,13 +55,14 @@ namespace TuttiBot
                 nullSearchIds.Add(newSearchIds);
                 string jsonstring = JsonConvert.SerializeObject(nullSearchIds);
                 File.WriteAllText(file_path, jsonstring);
+                return true;
             }
             else
             {
 
-               // oldSearchIds.Add(newSearchIds);
+                oldSearchIds.Add(newSearchIds);
 
-                foreach (SearchIds searchIds in oldSearchIds)
+                foreach (SearchIdsAndTerms searchIds in oldSearchIds)
                 {
                     if (searchIds.searchTerm.Equals(newSearchIds.searchTerm)){
                         searchIds.ids = newSearchIds.ids;
@@ -69,6 +71,7 @@ namespace TuttiBot
 
                 string jsonstring = JsonConvert.SerializeObject(oldSearchIds);
                 File.WriteAllText(file_path, jsonstring);
+                return true;
             }
           
 
@@ -80,7 +83,7 @@ namespace TuttiBot
         {
             Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
             List<int> notified_ids = null;
-            List<SearchIds> allNotifiedIds = this.loadAllNotifiedIds(this.confFile_path);
+            List<SearchIdsAndTerms> allNotifiedIds = this.loadAllNotifiedIds(this.confFile_path);
             if (allNotifiedIds == null)
             {
                 notified_ids = null;
@@ -98,7 +101,7 @@ namespace TuttiBot
                     if (unnotified_ids.Contains(Int32.Parse(offer.offer_id)))
                     {
 
-                        pushover.pushText(offer.title, offer.ToString());
+                        pushover.pushText(offer.ToString());
                     }
                 }
 
@@ -113,15 +116,24 @@ namespace TuttiBot
                     currentSearch_ids.Add(Int32.Parse(offer.offer_id));
                 }
 
-                List<int> unnotified_ids = currentSearch_ids.Except(notified_ids).ToList();
+                List<int> unnotified_ids = new List<int>();
+                if (notified_ids == null)
+                {
+                    unnotified_ids = currentSearch_ids;
+                }
+                else
+                {
+                    unnotified_ids = currentSearch_ids.Except(notified_ids).ToList();
+                }
+                
 
-
+                
                 foreach (Offer offer in offers)
                 {
                     if (unnotified_ids.Contains(Int32.Parse(offer.offer_id)))
                     {
 
-                        pushover.pushText(offer.title, offer.ToString());
+                        pushover.pushText(offer.ToString());
                     }
                 }
 

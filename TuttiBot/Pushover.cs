@@ -15,6 +15,7 @@ namespace TuttiBot
     {
         private string appkey;
         private string userkey;
+        
 
         public Pushover(string userkey, string appkey)
         {
@@ -22,13 +23,17 @@ namespace TuttiBot
             this.appkey = appkey;
         }
 
-        public void pushText(string title, string text)
+        public Pushover()
+        {
+            
+        }
+
+        public void pushText(string text)
         {
 
             var parameters = new NameValueCollection {
             { "token", appkey },
             { "user", userkey },
-            { "title", title },
             { "message", text }
             };
 

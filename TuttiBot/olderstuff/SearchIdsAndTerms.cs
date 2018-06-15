@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TuttiBot
 {
-    class SearchIds
+    class SearchIdsAndTerms
     {
-        public SearchIds(string searchTerm, List<int> ids)
+        public SearchIdsAndTerms(string searchTerm, List<int> ids)
         {
             this.searchTerm = searchTerm;
             this.ids = ids;
