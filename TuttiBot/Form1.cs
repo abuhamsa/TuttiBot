@@ -22,29 +22,34 @@ namespace TuttiBot
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-
-            
-        }
+       
 
         private async void button2_Click(object sender, EventArgs e)
         {
+            txt_log.Text = DateTime.Now.ToString("hh:mm:ss") + " - START";
             //CREATES A TUTTIPARSER OBJECT WITH THE CURRENT SEARCHTERM
-            TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + textBox3.Text);
+            TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + txt_searchterm.Text);
 
             //CREATES A LIST OF OFFERS FROM THE TUTTIPARSER OBJECT
+            
             List<Offer> offers = tuttiParser.loadNextract();
+            txt_log.Text = txt_log.Text+"\r\n "+DateTime.Now.ToString("hh:mm:ss") + " - OFFERS LOADED";
 
             //CREATES A NEW SEARCHIDSNOTIFYHANDLERJSON OBJECT WHICH IS USED TO NOW WICHT IDS ARE NEW AND WHICH ARE ALREADY NOTIFIED
-            SearchIdsNotifyHandlerJson searchIdsNotifyHandlerJson = new SearchIdsNotifyHandlerJson("C:\\Users\\reberja\\Documents\\tuttibot\\new_searches.json");
+            string configpath = "C:\\Users\\reberja\\Documents\\tuttibot\\alreadynotifiedids.json";
+            if (txt_filepath.Text != "")
+            {
+                configpath = txt_filepath.Text;
+            }
+            SearchIdsNotifyHandlerJson searchIdsNotifyHandlerJson = new SearchIdsNotifyHandlerJson(configpath);
 
             List<int> unnotifiedIds = searchIdsNotifyHandlerJson.getUnnotifiedIds(offers);
-
+            txt_log.Text = txt_log.Text + "\r\n " + DateTime.Now.ToString("hh:mm:ss") + " - GOT UNNOTIFIED IDS";
 
             //CREATES A NEW DELIVERYHANDLER WITH THE PROVIDER "PUSHOVER"
-            DeliveryHandler deliveryHandler = new DeliveryHandler("pushover");
+            var checkedProviderButton = grp_provider.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+            DeliveryHandler deliveryHandler = new DeliveryHandler(checkedProviderButton.Text);
 
 
             //CHECKS IF THE OFFERIDS OF OFFERS WITH THE UNOTIFIEDIDS FROM ABOVE
@@ -56,20 +61,22 @@ namespace TuttiBot
 
                     //deliveryHandler.sendTextOnly(offer);
                     deliveryHandler.sendCompleteAsync(offer);
-                    }
+                    txt_log.Text = txt_log.Text + "\r\n " + DateTime.Now.ToString("hh:mm:ss") + " - OFFER ("+offer.offer_id+") SENT";
+                }
             }
 
             //UPDATE THE ALREADYNOTIFIED-CONFIGFILE AFTER THE DELIVERY 
             searchIdsNotifyHandlerJson.updateAlreadyNotifiedIds(searchIdsNotifyHandlerJson.getUnnotifiedIds(offers));
-
-           
-
+            txt_log.Text = txt_log.Text + "\r\n " + DateTime.Now.ToString("hh:mm:ss") + " - NOTIFIED OFFERS UPDATED";
 
 
 
 
 
-            Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
+
+
+
+            //Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
             // pushover.sendText(offers[0].title, offers[0].ToString());
 
             // OldDeliveryHandlerJson deliveryHandler = new OldDeliveryHandlerJson();
@@ -85,6 +92,25 @@ namespace TuttiBot
             }*/
 
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void btn_choosefile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                txt_filepath.Text = openFileDialog1.FileName;
+
+            }
         }
     }
 }

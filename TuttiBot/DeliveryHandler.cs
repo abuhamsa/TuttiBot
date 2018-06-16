@@ -16,11 +16,11 @@ namespace TuttiBot
             this.provider = provider;
             switch (provider)
             {
-                case "pushover":
+                case "Pushover":
                     //MAYBE CHANGE THIS SO NOT FOR EVERY MESSAGE A NEW OBJECT HAVE TO BE CREATED
                     this.pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
                     break;
-                case "telegram":
+                case "Telegram":
                     Console.WriteLine("Telegram is not yet implemented!");
                     break;
             }
@@ -32,10 +32,10 @@ namespace TuttiBot
 
             switch (provider)
             {
-                case "pushover":
+                case "Pushover":
                     pushover.pushText(offer.ToString());
                     break;
-                case "telegram":
+                case "Telegram":
                     Console.WriteLine("Telegram is not yet implemented!");
                     break;
             }
@@ -47,10 +47,10 @@ namespace TuttiBot
             
             switch (provider)
             {
-                case "pushover":
+                case "Pushover":
                     await pushover.pushImage(offer.ToString(), offer.thumb_url);
                     break;
-                case "telegram":
+                case "Telegram":
                     Console.WriteLine("Telegram is not yet implemented!");
                     break;
             }

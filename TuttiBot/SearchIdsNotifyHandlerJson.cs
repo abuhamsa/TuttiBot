@@ -27,10 +27,18 @@ namespace TuttiBot
             }
 
             string jsonstring = File.ReadAllText(this.confFile_path);
-            List<int> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<int>>(jsonstring);
 
-            List<int> newSearchIds = currentSearchIds.Except(alreadyNotifiedSearchIds).ToList();
-            return newSearchIds;
+            if (jsonstring != "")
+            {
+                List<int> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<int>>(jsonstring);
+
+                List<int> newSearchIds = currentSearchIds.Except(alreadyNotifiedSearchIds).ToList();
+                return newSearchIds;
+            } else
+            {             
+                List<int> newSearchIds = currentSearchIds;
+                return newSearchIds;
+            }
         }
 
         //UPDATES THE CONFIGFILE WITH THE NEWLY NOTIFIED IDS
@@ -38,12 +46,23 @@ namespace TuttiBot
         {
 
             string jsonstring = File.ReadAllText(this.confFile_path);
-            List<int> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<int>>(jsonstring);
-
             List<int> updatedAlreadyNotifiedSearchIds = new List<int>();
-            updatedAlreadyNotifiedSearchIds.AddRange(alreadyNotifiedSearchIds);
-            updatedAlreadyNotifiedSearchIds.AddRange(newSearchIds);
 
+            if (jsonstring != "")
+            {
+                List<int> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<int>>(jsonstring);
+
+                
+                updatedAlreadyNotifiedSearchIds.AddRange(alreadyNotifiedSearchIds);
+                updatedAlreadyNotifiedSearchIds.AddRange(newSearchIds);
+
+                
+            }
+            else
+            {
+                updatedAlreadyNotifiedSearchIds.AddRange(newSearchIds);
+
+            }
             string jsonstring1 = JsonConvert.SerializeObject(updatedAlreadyNotifiedSearchIds);
             File.WriteAllText(this.confFile_path, jsonstring1);
 
