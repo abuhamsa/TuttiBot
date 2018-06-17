@@ -42,19 +42,21 @@ namespace TuttiBot
 
         }
 
-        public async void sendCompleteAsync(Offer offer)
+        public async Task<bool> sendCompleteAsync(Offer offer)
         {
             
             switch (provider)
             {
                 case "Pushover":
                     await pushover.pushImage(offer.ToString(), offer.thumb_url);
+                    
                     break;
+                   
                 case "Telegram":
                     Console.WriteLine("Telegram is not yet implemented!");
                     break;
             }
-
+            return true;
         }
 
 

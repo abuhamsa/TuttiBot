@@ -143,6 +143,7 @@
             this.txt_log.Location = new System.Drawing.Point(311, 27);
             this.txt_log.Multiline = true;
             this.txt_log.Name = "txt_log";
+            this.txt_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txt_log.Size = new System.Drawing.Size(420, 158);
             this.txt_log.TabIndex = 7;
             // 
