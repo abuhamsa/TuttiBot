@@ -43,6 +43,7 @@ namespace TuttiBot
             if (txt_filepath.Text != "")
             {
                 configpath = txt_filepath.Text;
+                
             }
             SearchIdsNotifyHandlerJson searchIdsNotifyHandlerJson = new SearchIdsNotifyHandlerJson(configpath);
 

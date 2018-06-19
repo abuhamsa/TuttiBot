@@ -179,6 +179,7 @@
             this.Controls.Add(this.txt_searchterm);
             this.Controls.Add(this.btn_runsearch);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "TuttiBot-Test GUI";
             this.grp_provider.ResumeLayout(false);
