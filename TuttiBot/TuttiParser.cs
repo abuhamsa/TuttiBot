@@ -1,4 +1,6 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -23,7 +25,7 @@ namespace TuttiBot
 
         }      
 
-        //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK
+        //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK WITH HEADLESSCHROME
         public List<Offer> loadNextract()
         {
             //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN         
@@ -101,6 +103,44 @@ namespace TuttiBot
             string clean = Regex.Replace(tobecleaned, @"\r\n?|\n|\t|\r|^(\s*)", "");
             return clean;
         }
+
+        //LOADING TUTTI.CH SEARCH JSON AND CREATES OFFER LIST WITH HTMLAGILITYPACK
+        public List<Offer> loadNextractJson()
+        {
+            var url = this.url;
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
+            //XPATH TO THE JSON-STRING
+            HtmlNode htmlNode = doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/script[2]");
+            string rawjson = htmlNode.InnerText;
+            //SUBSTRING FOR GET ONLY JSON STUFF
+            string onlyjson = rawjson.Substring(rawjson.IndexOf("{"));
+
+            //CREATES JOBJECT OUT OF THE JSON-STRING
+            JObject wholeJson = JsonConvert.DeserializeObject<JObject>(onlyjson);
+
+            //THE LAST JTOKEN IS THE JTOKEN WITH THE OFFERS INCLUDED
+            JToken itemsjt = wholeJson.Last.Last;
+            
+            //CREATE THE LIST WITH OFFER OBJECTS THAT WE WILL RETURN
+            List<Offer> offers = new List<Offer>();
+
+            foreach (JToken token in itemsjt)
+            {
+                //THE LAST TOKEN HAS THE INFORMATIONS FOR 1 ITEM/OFFER
+                Item item =token.Last.ToObject<Item>();
+
+                //THE METHOD TOOFFER CREATES A OFFER OUT OF AN ITEM
+                offers.Add(item.toOffer(item));
+            }
+            
+           
+            
+
+
+            return offers;
+        }
+
 
     }
 }

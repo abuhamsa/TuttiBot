@@ -40,7 +40,7 @@
             this.rbtn_pushover = new System.Windows.Forms.RadioButton();
             this.txt_log = new System.Windows.Forms.TextBox();
             this.lbl_log = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pgb_woking = new System.Windows.Forms.ProgressBar();
             this.grp_provider.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,19 +156,19 @@
             this.lbl_log.TabIndex = 8;
             this.lbl_log.Text = "Log:";
             // 
-            // progressBar1
+            // pgb_woking
             // 
-            this.progressBar1.Location = new System.Drawing.Point(311, 192);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(420, 21);
-            this.progressBar1.TabIndex = 9;
+            this.pgb_woking.Location = new System.Drawing.Point(311, 192);
+            this.pgb_woking.Name = "pgb_woking";
+            this.pgb_woking.Size = new System.Drawing.Size(420, 21);
+            this.pgb_woking.TabIndex = 9;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 225);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.pgb_woking);
             this.Controls.Add(this.lbl_log);
             this.Controls.Add(this.txt_log);
             this.Controls.Add(this.grp_provider);
@@ -201,7 +201,7 @@
         private System.Windows.Forms.RadioButton rbtn_pushover;
         private System.Windows.Forms.TextBox txt_log;
         private System.Windows.Forms.Label lbl_log;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar pgb_woking;
     }
 }
 

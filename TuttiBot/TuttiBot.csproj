@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeliveryHandler.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="SearchIdsNotifyHandlerJson.cs" />
     <Compile Include="olderstuff\OldDeliveryHandlerJson.cs" />
     <Compile Include="Form1.cs">

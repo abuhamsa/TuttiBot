@@ -34,7 +34,8 @@ namespace TuttiBot
 
             //CREATES A LIST OF OFFERS FROM THE TUTTIPARSER OBJECT
             
-            List<Offer> offers = tuttiParser.loadNextract();
+            //List<Offer> offers = tuttiParser.loadNextract();
+            List<Offer> offers = tuttiParser.loadNextractJson();
             txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - OFFERS LOADED\r\n");
 
             //CREATES A NEW SEARCHIDSNOTIFYHANDLERJSON OBJECT WHICH IS USED TO NOW WICHT IDS ARE NEW AND WHICH ARE ALREADY NOTIFIED
@@ -74,26 +75,7 @@ namespace TuttiBot
             txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - NOTIFIED OFFERS UPDATED\r\n");
             txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - END\r\n");
 
-
-
-
-
-
-
-            //Pushover pushover = new Pushover("uoGz5xaAPxZQFGDJwPhEF3vJF6eeYG", "ae965hsnhmamdo12wcpmxw75fto72a");
-            // pushover.sendText(offers[0].title, offers[0].ToString());
-
-            // OldDeliveryHandlerJson deliveryHandler = new OldDeliveryHandlerJson();
-            // deliveryHandler.sendNewOffersPushover(offers, textBox3.Text);
-
-            // await pushover.pushImage( offers[0].ToString(),offers[0].thumb_url);
-            // Console.WriteLine("blub");
-
-            /*
-            foreach (Offer offer in offers)
-            {
-                await pushover.pushImage(offer.ToString(), offer.thumb_url);
-            }*/
+            
 
 
         }
