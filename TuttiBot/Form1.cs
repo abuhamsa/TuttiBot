@@ -131,6 +131,21 @@ namespace TuttiBot
             btn_stop.Enabled = false;
         }
 
-       
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                notifyIcon1.Visible = true;
+                this.Hide();
+                e.Cancel = true;
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            notifyIcon1.Visible = false;
+            this.Show();
+        }
     }
 }

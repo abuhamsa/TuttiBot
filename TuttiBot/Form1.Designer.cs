@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.txt_filepath = new System.Windows.Forms.TextBox();
             this.btn_choosefile = new System.Windows.Forms.Button();
@@ -44,6 +46,7 @@
             this.btn_stop = new System.Windows.Forms.Button();
             this.txt_interval = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.grp_provider.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +96,6 @@
             this.txt_searchterm.Name = "txt_searchterm";
             this.txt_searchterm.Size = new System.Drawing.Size(289, 20);
             this.txt_searchterm.TabIndex = 3;
-            this.txt_searchterm.Text = "unihockey";
             // 
             // lbl_searchterm
             // 
@@ -193,6 +195,12 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "Interval:";
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "TuttiBot";
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,8 +221,10 @@
             this.Controls.Add(this.btn_runsearch);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "TuttiBot-Test GUI";
+            this.Text = "TuttiBot";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.grp_provider.ResumeLayout(false);
             this.grp_provider.PerformLayout();
             this.ResumeLayout(false);
@@ -239,6 +249,7 @@
         private System.Windows.Forms.Button btn_stop;
         private System.Windows.Forms.TextBox txt_interval;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 
