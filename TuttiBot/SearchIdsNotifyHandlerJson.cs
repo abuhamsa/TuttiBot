@@ -18,39 +18,39 @@ namespace TuttiBot
         }
 
         //GIVES YOU ALL IDS THAT ARE NOT IN THE CONFIGFILE
-        public List<int> getUnnotifiedIds(List<Offer> offers)
+        public List<long> getUnnotifiedIds(List<Offer> offers)
         {
-            List<int> currentSearchIds=new List<int>();
+            List<long> currentSearchIds=new List<long>();
             foreach (Offer offer in offers)
             {
-                currentSearchIds.Add(Int32.Parse(offer.offer_id));
+                currentSearchIds.Add(long.Parse(offer.offer_id));
             }
 
             string jsonstring = File.ReadAllText(this.confFile_path);
 
             if (jsonstring != "")
             {
-                List<int> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<int>>(jsonstring);
+                List<long> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<long>>(jsonstring);
 
-                List<int> newSearchIds = currentSearchIds.Except(alreadyNotifiedSearchIds).ToList();
+                List<long> newSearchIds = currentSearchIds.Except(alreadyNotifiedSearchIds).ToList();
                 return newSearchIds;
             } else
             {             
-                List<int> newSearchIds = currentSearchIds;
+                List<long> newSearchIds = currentSearchIds;
                 return newSearchIds;
             }
         }
 
         //UPDATES THE CONFIGFILE WITH THE NEWLY NOTIFIED IDS
-        public void updateAlreadyNotifiedIds (List<int> newSearchIds)
+        public void updateAlreadyNotifiedIds (List<long> newSearchIds)
         {
 
             string jsonstring = File.ReadAllText(this.confFile_path);
-            List<int> updatedAlreadyNotifiedSearchIds = new List<int>();
+            List<long> updatedAlreadyNotifiedSearchIds = new List<long>();
 
             if (jsonstring != "")
             {
-                List<int> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<int>>(jsonstring);
+                List<long> alreadyNotifiedSearchIds = JsonConvert.DeserializeObject<List<long>>(jsonstring);
 
                 
                 updatedAlreadyNotifiedSearchIds.AddRange(alreadyNotifiedSearchIds);

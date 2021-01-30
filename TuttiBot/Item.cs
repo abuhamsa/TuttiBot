@@ -38,7 +38,7 @@ namespace TuttiBot
             offer.offer_id = item.id;
             offer.published = item.fromUnixTime(item.epoch_time).ToString();
             offer.price = item.price;
-            offer.thumb_url = "https://c.tutti.ch/gallery/"+item.id+"-"+item.thumb_name;
+            offer.thumb_url = "https://c.tutti.ch/gallery/"+item.thumb_name;
             offer.title = item.subject;
             offer.description = item.body;
             offer.link = "https://www.tutti.ch/de/vi/" + item.id; ;

@@ -111,7 +111,7 @@ namespace TuttiBot
             var web = new HtmlWeb();
             var doc = web.Load(url);
             //XPATH TO THE JSON-STRING
-            HtmlNode htmlNode = doc.DocumentNode.SelectSingleNode("/html[1]/body[1]/script[2]");
+            HtmlNode htmlNode = doc.DocumentNode.SelectSingleNode("/html/body/script[1]");
             string rawjson = htmlNode.InnerText;
             //SUBSTRING FOR GET ONLY JSON STUFF
             string onlyjson = rawjson.Substring(rawjson.IndexOf("{"));
