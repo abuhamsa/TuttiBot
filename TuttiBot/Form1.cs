@@ -23,11 +23,12 @@ namespace TuttiBot
             InitializeComponent();
         }
 
-       
+        private Boolean running;
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            while (true)
+            running = true;
+            while (running)
             {
                 txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - START\r\n");
                 //CREATES A TUTTIPARSER OBJECT WITH THE CURRENT SEARCHTERM
@@ -35,7 +36,7 @@ namespace TuttiBot
 
                 //CREATES A LIST OF OFFERS FROM THE TUTTIPARSER OBJECT
 
-                //List<Offer> offers = tuttiParser.loadNextract();
+                
                 List<Offer> offers = tuttiParser.loadNextractJson();
                 txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - OFFERS LOADED\r\n");
 
@@ -77,7 +78,8 @@ namespace TuttiBot
                 txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - NOTIFIED OFFERS UPDATED\r\n");
                 txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - END\r\n");
 
-                System.Threading.Thread.Sleep(100000);
+                await Task.Delay(10000);
+
             }
 
 
@@ -100,6 +102,12 @@ namespace TuttiBot
                 txt_filepath.Text = openFileDialog1.FileName;
 
             }
+        }
+
+        private void btn_stop_Click(object sender, EventArgs e)
+        {
+            running = false;
+            txt_log.AppendText(DateTime.Now.ToString("hh:mm:ss") + " - SEARCH STOPPED\r\n");
         }
     }
 }

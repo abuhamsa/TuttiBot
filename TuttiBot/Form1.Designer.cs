@@ -41,6 +41,7 @@
             this.txt_log = new System.Windows.Forms.TextBox();
             this.lbl_log = new System.Windows.Forms.Label();
             this.pgb_woking = new System.Windows.Forms.ProgressBar();
+            this.btn_stop = new System.Windows.Forms.Button();
             this.grp_provider.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +79,7 @@
             // 
             this.btn_runsearch.Location = new System.Drawing.Point(15, 191);
             this.btn_runsearch.Name = "btn_runsearch";
-            this.btn_runsearch.Size = new System.Drawing.Size(289, 23);
+            this.btn_runsearch.Size = new System.Drawing.Size(180, 23);
             this.btn_runsearch.TabIndex = 4;
             this.btn_runsearch.Text = "Run Search";
             this.btn_runsearch.UseVisualStyleBackColor = true;
@@ -163,11 +164,22 @@
             this.pgb_woking.Size = new System.Drawing.Size(420, 21);
             this.pgb_woking.TabIndex = 9;
             // 
+            // btn_stop
+            // 
+            this.btn_stop.Location = new System.Drawing.Point(201, 191);
+            this.btn_stop.Name = "btn_stop";
+            this.btn_stop.Size = new System.Drawing.Size(104, 23);
+            this.btn_stop.TabIndex = 10;
+            this.btn_stop.Text = "Stop Search";
+            this.btn_stop.UseVisualStyleBackColor = true;
+            this.btn_stop.Click += new System.EventHandler(this.btn_stop_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 225);
+            this.Controls.Add(this.btn_stop);
             this.Controls.Add(this.pgb_woking);
             this.Controls.Add(this.lbl_log);
             this.Controls.Add(this.txt_log);
@@ -203,6 +215,7 @@
         private System.Windows.Forms.TextBox txt_log;
         private System.Windows.Forms.Label lbl_log;
         private System.Windows.Forms.ProgressBar pgb_woking;
+        private System.Windows.Forms.Button btn_stop;
     }
 }
 

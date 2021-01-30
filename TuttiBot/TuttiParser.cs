@@ -26,6 +26,7 @@ namespace TuttiBot
         }      
 
         //LOADING TUTTI.CH SEARCH HTML AND CREATES OFFER LIST WITH HTMLAGILITYPACK WITH HEADLESSCHROME
+        //OBSOLETE DOES NOT WORK ATM
         public List<Offer> loadNextract()
         {
             //TODO: CHROMESTUFF VIELLEICHT IN EIGENE KLASSE SCHIEBEN         

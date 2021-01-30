@@ -44,7 +44,7 @@
         }*/
 
         //OVERWRITTEN TOSTRING
-        public string ToString()
+        public override string ToString()
         {
             string offerString;
 

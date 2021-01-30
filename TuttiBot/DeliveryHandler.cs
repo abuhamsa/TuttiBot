@@ -49,7 +49,14 @@ namespace TuttiBot
             switch (provider)
             {
                 case "Pushover":
-                    await pushover.pushImage(offer.ToString(), offer.thumb_url);
+                    if (offer.thumb_url == "https://c.tutti.ch/gallery/")
+                    {
+                        pushover.pushText(offer.ToString());
+                    }
+                    else
+                    {
+                        await pushover.pushImage(offer.ToString(), offer.thumb_url);
+                    }
                     
                     break;
                    
