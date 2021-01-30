@@ -42,6 +42,8 @@
             this.lbl_log = new System.Windows.Forms.Label();
             this.pgb_woking = new System.Windows.Forms.ProgressBar();
             this.btn_stop = new System.Windows.Forms.Button();
+            this.txt_interval = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.grp_provider.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,7 +114,7 @@
             this.grp_provider.Controls.Add(this.rbtn_pushover);
             this.grp_provider.Location = new System.Drawing.Point(16, 119);
             this.grp_provider.Name = "grp_provider";
-            this.grp_provider.Size = new System.Drawing.Size(288, 66);
+            this.grp_provider.Size = new System.Drawing.Size(179, 66);
             this.grp_provider.TabIndex = 6;
             this.grp_provider.TabStop = false;
             this.grp_provider.Text = "Provider";
@@ -166,6 +168,7 @@
             // 
             // btn_stop
             // 
+            this.btn_stop.Enabled = false;
             this.btn_stop.Location = new System.Drawing.Point(201, 191);
             this.btn_stop.Name = "btn_stop";
             this.btn_stop.Size = new System.Drawing.Size(104, 23);
@@ -174,11 +177,29 @@
             this.btn_stop.UseVisualStyleBackColor = true;
             this.btn_stop.Click += new System.EventHandler(this.btn_stop_Click);
             // 
+            // txt_interval
+            // 
+            this.txt_interval.Location = new System.Drawing.Point(200, 135);
+            this.txt_interval.Name = "txt_interval";
+            this.txt_interval.Size = new System.Drawing.Size(104, 20);
+            this.txt_interval.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(198, 119);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Interval:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 225);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txt_interval);
             this.Controls.Add(this.btn_stop);
             this.Controls.Add(this.pgb_woking);
             this.Controls.Add(this.lbl_log);
@@ -216,6 +237,8 @@
         private System.Windows.Forms.Label lbl_log;
         private System.Windows.Forms.ProgressBar pgb_woking;
         private System.Windows.Forms.Button btn_stop;
+        private System.Windows.Forms.TextBox txt_interval;
+        private System.Windows.Forms.Label label2;
     }
 }
 
