@@ -18,7 +18,7 @@ namespace TuttiBot
             switch (provider)
             {
                 case "Pushover":
-                    //MAYBE CHANGE THIS SO NOT FOR EVERY MESSAGE A NEW OBJECT HAVE TO BE CREATED
+                    //MAYBE CHANGE THIS SO NOT FOR EVERY MESSAGE A NEW OBJECT HAVE TO BE CREATED.
                     this.pushover = new Pushover(ConfigurationManager.AppSettings["userkey"], ConfigurationManager.AppSettings["applicationkey"]);
                     break;
                 case "Telegram":
