@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Telegram.Bot;
 
 namespace TuttiBot
 {
@@ -27,6 +28,7 @@ namespace TuttiBot
 
         private async void button2_Click(object sender, EventArgs e)
         {
+            
             running = true;
             while (running)
             {

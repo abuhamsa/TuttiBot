@@ -11,6 +11,7 @@ namespace TuttiBot
     {
         private string provider;
         private Pushover pushover;
+        private Telegram telegram;
 
         public DeliveryHandler(string provider)
         {
@@ -22,13 +23,13 @@ namespace TuttiBot
                     this.pushover = new Pushover(ConfigurationManager.AppSettings["userkey"], ConfigurationManager.AppSettings["applicationkey"]);
                     break;
                 case "Telegram":
-                    Console.WriteLine("Telegram is not yet implemented!");
+                    this.telegram = new Telegram();
                     break;
             }
 
         }
 
-        public void sendTextOnly(Offer offer)
+        public async void sendTextOnly(Offer offer)
         {
 
             switch (provider)
@@ -37,7 +38,7 @@ namespace TuttiBot
                     pushover.pushText(offer.ToString());
                     break;
                 case "Telegram":
-                    Console.WriteLine("Telegram is not yet implemented!");
+                    await telegram.TelegramTestAsync(offer.ToString());
                     break;
             }
 
@@ -61,7 +62,8 @@ namespace TuttiBot
                     break;
                    
                 case "Telegram":
-                    Console.WriteLine("Telegram is not yet implemented!");
+                    await telegram.TelegramTestAsync(offer.ToString());
+                    await Task.Delay(5000);
                     break;
             }
             return true;
