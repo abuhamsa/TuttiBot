@@ -23,7 +23,7 @@ namespace TuttiBot
                     this.pushover = new Pushover(ConfigurationManager.AppSettings["userkey"], ConfigurationManager.AppSettings["applicationkey"]);
                     break;
                 case "Telegram":
-                    this.telegram = new Telegram();
+                    this.telegram = new Telegram(ConfigurationManager.AppSettings["telegrambottoken"], ConfigurationManager.AppSettings["telegramchatid"]);
                     break;
             }
 

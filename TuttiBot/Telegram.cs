@@ -11,27 +11,34 @@ namespace TuttiBot
 {
     public class Telegram
     {
-        
+        private string bottoken;
+        private string chatid;
+        private TelegramBotClient botClient;
+        public Telegram(string bottoken, string chatid)
+        {
+            this.bottoken = bottoken;
+            this.chatid = chatid;
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            botClient = new TelegramBotClient(bottoken);
+
+        }
+
         public async Task TelegramTextAsync(string tg_text)
         {
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-            TelegramBotClient botClient;
-            botClient = new TelegramBotClient("1628795996:AAEaFcRaZmV1oCGBN_b9LkqFPckicoWJUzA");
+            
+            
             var me = await botClient.GetMeAsync();
             await botClient.SendTextMessageAsync(
-                 chatId: -586353124,
+                 chatId: this.chatid,
                  text: tg_text
                );
         }
 
         public async Task TelegramImgAsync(string tg_text, string imgUrl)
         {
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-            TelegramBotClient botClient;
-            botClient = new TelegramBotClient("1628795996:AAEaFcRaZmV1oCGBN_b9LkqFPckicoWJUzA");
             var me = await botClient.GetMeAsync();
             await botClient.SendPhotoAsync(
-                 chatId: -586353124,
+                 chatId: this.chatid,
                  photo: imgUrl,
                  caption: tg_text
                );
