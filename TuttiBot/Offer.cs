@@ -27,21 +27,6 @@
             this.link = link;
         }
 
-        //OVERWRITTEN TOSTRING
-        /*public string ToString()
-        {
-            string offerString;
-
-            offerString = "ID: " + offer_id + "\r\n";
-            offerString += "Title: " + title + "\r\n";
-            offerString += "Published: " + published + "\r\n";
-            offerString += "Price: " + price + "\r\n";
-            //offerString += "Thumb: " + thumb_url + "\r\n";
-            offerString += "Description: " + description + "\r\n";
-            offerString += "Link: " + link + "\r\n";
-            offerString += "\r\n";
-            return offerString;
-        }*/
 
         //OVERWRITTEN TOSTRING
         public override string ToString()
@@ -52,10 +37,15 @@
             offerString += "Title: " + title + "\r\n";
             offerString += "Published: " + published + "\r\n";
             offerString += "Price: " + price + "\r\n";
-            //offerString += "Thumb: " + thumb_url + "\r\n";
             int max = 100;
-            if (description.Length < max) { max = description.Length; }
-            offerString += "Description: " + description.Substring(0,max)+ " ...\r\n";
+            if (description.Length > max) { 
+                offerString += "Description: " + description.Substring(0, max) + " ...\r\n"; 
+            } else
+            {
+                offerString += "Description: " + description+ "\r\n";
+            }
+
+            
             offerString += "Link: " + link + "\r\n";
             offerString += "\r\n";
             return offerString;

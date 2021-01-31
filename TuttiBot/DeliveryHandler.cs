@@ -38,7 +38,7 @@ namespace TuttiBot
                     pushover.pushText(offer.ToString());
                     break;
                 case "Telegram":
-                    await telegram.TelegramTestAsync(offer.ToString());
+                    await telegram.TelegramTextAsync(offer.ToString());
                     break;
             }
 
@@ -62,8 +62,14 @@ namespace TuttiBot
                     break;
                    
                 case "Telegram":
-                    await telegram.TelegramTestAsync(offer.ToString());
-                    await Task.Delay(5000);
+                    if (offer.thumb_url == "https://c.tutti.ch/gallery/")
+                    {
+                        await telegram.TelegramTextAsync(offer.ToString());
+                        await Task.Delay(5000);
+                    }
+                    else
+                        await telegram.TelegramImgAsync(offer.ToString(),offer.thumb_url);
+                        await Task.Delay(5000);
                     break;
             }
             return true;

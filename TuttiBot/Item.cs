@@ -49,7 +49,7 @@ namespace TuttiBot
         //CONVERTS EPOCHTIME/UNIXTIME TO DATETIME
         private  DateTime fromUnixTime (long unixTime)
         {
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
+            var epoch = new DateTime(1970, 1, 1, 1, 0, 0);
             return epoch.AddSeconds(unixTime);
         }
         
