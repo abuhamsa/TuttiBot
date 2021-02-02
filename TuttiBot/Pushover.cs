@@ -46,7 +46,7 @@ namespace TuttiBot
 
         public async Task pushImage( string message, string urlImage)
         {
-            // This does not work - error "message cannot be blank"
+            // This does not work - error "message cannot be blank".
             using (HttpClient httpClient = new HttpClient())
             {
 
