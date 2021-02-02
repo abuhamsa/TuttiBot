@@ -40,53 +40,62 @@ namespace TuttiBot
                 txt_searchterm.Enabled = false;
                 btn_stop.Enabled = true;
 
-                txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - START SEARCH FOR " +txt_searchterm.Text+"\r\n");
-                //CREATES A TUTTIPARSER OBJECT WITH THE CURRENT SEARCHTERM
-                TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + txt_searchterm.Text);
+                List<string> searchTerms = txt_searchterm.Text.Split(';').ToList<string>();
 
-                //CREATES A LIST OF OFFERS FROM THE TUTTIPARSER OBJECT
-
-                
-                List<Offer> offers = tuttiParser.loadNextractJson();
-                txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - OFFERS LOADED\r\n");
-
-                //CREATES A NEW SEARCHIDSNOTIFYHANDLERJSON OBJECT WHICH IS USED TO NOW WICHT IDS ARE NEW AND WHICH ARE ALREADY NOTIFIED
-                string configpath = "C:\\Users\\reberja\\Documents\\tuttibot\\alreadynotifiedids.json";
-                if (txt_filepath.Text != "")
-                {
-                    configpath = txt_filepath.Text;
-
-                }
-                SearchIdsNotifyHandlerJson searchIdsNotifyHandlerJson = new SearchIdsNotifyHandlerJson(configpath);
-
-                List<long> unnotifiedIds = searchIdsNotifyHandlerJson.getUnnotifiedIds(offers);
-                txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - GOT UNNOTIFIED IDS [" + unnotifiedIds.Count + "]\r\n");
-
-                //CREATES A NEW DELIVERYHANDLER WITH THE PROVIDER "PUSHOVER"
-                var checkedProviderButton = grp_provider.Controls.OfType<RadioButton>()
-                                          .FirstOrDefault(r => r.Checked);
-                DeliveryHandler deliveryHandler = new DeliveryHandler(checkedProviderButton.Text);
-
-
-                //CHECKS IF THE OFFERIDS OF OFFERS WITH THE UNOTIFIEDIDS FROM ABOVE
-                int i = 1;
-                foreach (Offer offer in offers)
+                foreach (string searchTerm in searchTerms)
                 {
 
-                    if (unnotifiedIds.Contains(long.Parse(offer.offer_id)))
+
+                    txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - START SEARCH FOR " + searchTerm + "\r\n");
+                    //CREATES A TUTTIPARSER OBJECT WITH THE CURRENT SEARCHTERM
+                    TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + searchTerm);
+
+                    //CREATES A LIST OF OFFERS FROM THE TUTTIPARSER OBJECT
+
+
+                    List<Offer> offers = tuttiParser.loadNextractJson();
+                    txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - OFFERS LOADED\r\n");
+
+                    //CREATES A NEW SEARCHIDSNOTIFYHANDLERJSON OBJECT WHICH IS USED TO NOW WICHT IDS ARE NEW AND WHICH ARE ALREADY NOTIFIED
+                    string configpath = "C:\\Users\\reberja\\Documents\\tuttibot\\alreadynotifiedids.json";
+                    if (txt_filepath.Text != "")
+                    {
+                        configpath = txt_filepath.Text;
+
+                    }
+                    SearchIdsNotifyHandlerJson searchIdsNotifyHandlerJson = new SearchIdsNotifyHandlerJson(configpath);
+
+                    List<long> unnotifiedIds = searchIdsNotifyHandlerJson.getUnnotifiedIds(offers);
+                    txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - GOT UNNOTIFIED IDS [" + unnotifiedIds.Count + "]\r\n");
+
+                    //CREATES A NEW DELIVERYHANDLER WITH THE PROVIDER "PUSHOVER"
+                    var checkedProviderButton = grp_provider.Controls.OfType<RadioButton>()
+                                              .FirstOrDefault(r => r.Checked);
+                    DeliveryHandler deliveryHandler = new DeliveryHandler(checkedProviderButton.Text);
+
+
+                    //CHECKS IF THE OFFERIDS OF OFFERS WITH THE UNOTIFIEDIDS FROM ABOVE
+                    int i = 1;
+                    foreach (Offer offer in offers)
                     {
 
-                        //deliveryHandler.sendTextOnly(offer);
-                        await deliveryHandler.sendCompleteAsync(offer);
-                        txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - OFFER (" + offer.offer_id + ") SENT [" + i + "/" + unnotifiedIds.Count + "]\r\n");
-                        i++;
-                    }
-                }
+                        if (unnotifiedIds.Contains(long.Parse(offer.offer_id)))
+                        {
 
-                //UPDATE THE ALREADYNOTIFIED-CONFIGFILE AFTER THE DELIVERY 
-                searchIdsNotifyHandlerJson.updateAlreadyNotifiedIds(searchIdsNotifyHandlerJson.getUnnotifiedIds(offers));
-                txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - NOTIFIED OFFERS UPDATED\r\n");
-                txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - END\r\n");
+                            //deliveryHandler.sendTextOnly(offer);
+                            await deliveryHandler.sendCompleteAsync(offer);
+                            txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - OFFER (" + offer.offer_id + ") SENT [" + i + "/" + unnotifiedIds.Count + "]\r\n");
+                            i++;
+                        }
+                    }
+
+                    //UPDATE THE ALREADYNOTIFIED-CONFIGFILE AFTER THE DELIVERY 
+                    searchIdsNotifyHandlerJson.updateAlreadyNotifiedIds(searchIdsNotifyHandlerJson.getUnnotifiedIds(offers));
+                    txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - NOTIFIED OFFERS UPDATED\r\n");
+                    txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - END\r\n");
+
+                    
+                }
 
                 if (txt_interval.Text == "")
                 {
