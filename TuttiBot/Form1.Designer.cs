@@ -49,6 +49,9 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.txt_api = new System.Windows.Forms.TextBox();
+            this.lbl_api = new System.Windows.Forms.Label();
+            this.btn_setapi = new System.Windows.Forms.Button();
             this.grp_provider.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +59,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 66);
+            this.label1.Location = new System.Drawing.Point(12, 163);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 0;
@@ -66,7 +69,7 @@
             // txt_filepath
             // 
             this.txt_filepath.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txt_filepath.Location = new System.Drawing.Point(16, 82);
+            this.txt_filepath.Location = new System.Drawing.Point(16, 179);
             this.txt_filepath.Name = "txt_filepath";
             this.txt_filepath.Size = new System.Drawing.Size(207, 20);
             this.txt_filepath.TabIndex = 1;
@@ -75,7 +78,7 @@
             // btn_choosefile
             // 
             this.btn_choosefile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btn_choosefile.Location = new System.Drawing.Point(229, 80);
+            this.btn_choosefile.Location = new System.Drawing.Point(229, 177);
             this.btn_choosefile.Name = "btn_choosefile";
             this.btn_choosefile.Size = new System.Drawing.Size(75, 23);
             this.btn_choosefile.TabIndex = 2;
@@ -85,7 +88,7 @@
             // 
             // btn_runsearch
             // 
-            this.btn_runsearch.Location = new System.Drawing.Point(15, 191);
+            this.btn_runsearch.Location = new System.Drawing.Point(15, 275);
             this.btn_runsearch.Name = "btn_runsearch";
             this.btn_runsearch.Size = new System.Drawing.Size(180, 23);
             this.btn_runsearch.TabIndex = 4;
@@ -117,12 +120,12 @@
             // 
             this.grp_provider.Controls.Add(this.rbtn_telegram);
             this.grp_provider.Controls.Add(this.rbtn_pushover);
-            this.grp_provider.Location = new System.Drawing.Point(16, 119);
+            this.grp_provider.Location = new System.Drawing.Point(16, 53);
             this.grp_provider.Name = "grp_provider";
-            this.grp_provider.Size = new System.Drawing.Size(179, 66);
+            this.grp_provider.Size = new System.Drawing.Size(288, 66);
             this.grp_provider.TabIndex = 6;
             this.grp_provider.TabStop = false;
-            this.grp_provider.Text = "Provider";
+            this.grp_provider.Text = "Provider:";
             // 
             // rbtn_telegram
             // 
@@ -133,6 +136,7 @@
             this.rbtn_telegram.TabIndex = 1;
             this.rbtn_telegram.Text = "Telegram";
             this.rbtn_telegram.UseVisualStyleBackColor = true;
+            this.rbtn_telegram.CheckedChanged += new System.EventHandler(this.rbtn_telegram_CheckedChanged);
             // 
             // rbtn_pushover
             // 
@@ -145,6 +149,7 @@
             this.rbtn_pushover.TabStop = true;
             this.rbtn_pushover.Text = "Pushover";
             this.rbtn_pushover.UseVisualStyleBackColor = true;
+            this.rbtn_pushover.CheckedChanged += new System.EventHandler(this.rbtn_pushover_CheckedChanged);
             // 
             // txt_log
             // 
@@ -152,7 +157,7 @@
             this.txt_log.Multiline = true;
             this.txt_log.Name = "txt_log";
             this.txt_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_log.Size = new System.Drawing.Size(420, 158);
+            this.txt_log.Size = new System.Drawing.Size(420, 243);
             this.txt_log.TabIndex = 7;
             // 
             // lbl_log
@@ -166,7 +171,7 @@
             // 
             // pgb_woking
             // 
-            this.pgb_woking.Location = new System.Drawing.Point(311, 192);
+            this.pgb_woking.Location = new System.Drawing.Point(311, 276);
             this.pgb_woking.Name = "pgb_woking";
             this.pgb_woking.Size = new System.Drawing.Size(420, 21);
             this.pgb_woking.TabIndex = 9;
@@ -174,7 +179,7 @@
             // btn_stop
             // 
             this.btn_stop.Enabled = false;
-            this.btn_stop.Location = new System.Drawing.Point(201, 191);
+            this.btn_stop.Location = new System.Drawing.Point(201, 275);
             this.btn_stop.Name = "btn_stop";
             this.btn_stop.Size = new System.Drawing.Size(104, 23);
             this.btn_stop.TabIndex = 10;
@@ -184,7 +189,7 @@
             // 
             // txt_interval
             // 
-            this.txt_interval.Location = new System.Drawing.Point(200, 135);
+            this.txt_interval.Location = new System.Drawing.Point(16, 227);
             this.txt_interval.Name = "txt_interval";
             this.txt_interval.Size = new System.Drawing.Size(104, 20);
             this.txt_interval.TabIndex = 11;
@@ -192,7 +197,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(198, 119);
+            this.label2.Location = new System.Drawing.Point(13, 211);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 12;
@@ -220,11 +225,40 @@
             this.toolStripMenuItem1.Text = "Close";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
+            // txt_api
+            // 
+            this.txt_api.Location = new System.Drawing.Point(15, 138);
+            this.txt_api.Name = "txt_api";
+            this.txt_api.Size = new System.Drawing.Size(207, 20);
+            this.txt_api.TabIndex = 13;
+            // 
+            // lbl_api
+            // 
+            this.lbl_api.AutoSize = true;
+            this.lbl_api.Location = new System.Drawing.Point(12, 122);
+            this.lbl_api.Name = "lbl_api";
+            this.lbl_api.Size = new System.Drawing.Size(53, 13);
+            this.lbl_api.TabIndex = 14;
+            this.lbl_api.Text = "User-Key:";
+            // 
+            // btn_setapi
+            // 
+            this.btn_setapi.Location = new System.Drawing.Point(228, 136);
+            this.btn_setapi.Name = "btn_setapi";
+            this.btn_setapi.Size = new System.Drawing.Size(75, 23);
+            this.btn_setapi.TabIndex = 15;
+            this.btn_setapi.Text = "Set";
+            this.btn_setapi.UseVisualStyleBackColor = true;
+            this.btn_setapi.Click += new System.EventHandler(this.btn_setapi_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 225);
+            this.ClientSize = new System.Drawing.Size(743, 309);
+            this.Controls.Add(this.btn_setapi);
+            this.Controls.Add(this.lbl_api);
+            this.Controls.Add(this.txt_api);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txt_interval);
             this.Controls.Add(this.btn_stop);
@@ -273,6 +307,9 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.TextBox txt_api;
+        private System.Windows.Forms.Label lbl_api;
+        private System.Windows.Forms.Button btn_setapi;
     }
 }
 

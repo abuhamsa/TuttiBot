@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -22,6 +23,11 @@ namespace TuttiBot
         public Form1()
         {
             InitializeComponent();
+            if (ConfigurationManager.AppSettings["userkey"] != "")
+            {
+                txt_api.Text = txt_api.Text = ConfigurationManager.AppSettings["userkey"];
+            }
+            else txt_api.Text = "set your API-Key here";
         }
 
         private Boolean running;
@@ -30,6 +36,7 @@ namespace TuttiBot
         {
             
             running = true;
+
             while (running)
             {
                 txt_filepath.Enabled = false;
@@ -167,6 +174,33 @@ namespace TuttiBot
         private void toolStripMenuItem1_Click(object sender,EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void rbtn_pushover_CheckedChanged(object sender, EventArgs e)
+        {
+            lbl_api.Text = "User-Key:";
+            txt_api.Text = ConfigurationManager.AppSettings["userkey"];
+        }
+
+        private void rbtn_telegram_CheckedChanged(object sender, EventArgs e)
+        {
+            lbl_api.Text = "Chat-ID:";
+            txt_api.Text = ConfigurationManager.AppSettings["telegramchatid"];
+        }
+
+        private void btn_setapi_Click(object sender, EventArgs e)
+        {
+            var checkedProviderButton = grp_provider.Controls.OfType<RadioButton>()
+                                              .FirstOrDefault(r => r.Checked);
+            if (checkedProviderButton.Text == "Pushover")
+            {
+                ConfigurationManager.AppSettings.Set("userkey", txt_api.Text);
+            }
+            else
+            {
+                ConfigurationManager.AppSettings.Set("telegramchatid", txt_api.Text);
+            }
+             
         }
     }
 }
