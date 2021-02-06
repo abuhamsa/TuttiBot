@@ -15,6 +15,6 @@ Das ganze ist noch total im Aufbau.
 2. App.config.example in App.config umbennen
 3. In VisualStudio starten
 4. Key für Provider setzen. 
-4a. Für Pushover bitte den Userkey setzen.
-4b. Bei Telegramm muss der Bot "tuttibotti" in deine Gruppe hinzugefügt werden (als Admin) danach die Chat-ID auslesen (https://t.me/RawDataBot) und entsprechend im GUI setzen. 
-5. Suchbegriff eingeben (mehrere Begriffe können gesucht werden und werden mit ; getrennt)
+5. Für Pushover bitte den Userkey setzen.
+6. Bei Telegramm muss der Bot "tuttibotti" in deine Gruppe hinzugefügt werden (als Admin) danach die Chat-ID auslesen (https://t.me/RawDataBot) und entsprechend im GUI setzen. 
+7. Suchbegriff eingeben (mehrere Begriffe können gesucht werden und werden mit ; getrennt)
