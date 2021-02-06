@@ -46,7 +46,7 @@ namespace TuttiBot
                 txt_interval.Enabled = false;
                 txt_searchterm.Enabled = false;
                 txt_api.Enabled = false;
-                btn_setapi = false;
+                btn_setapi.Enabled= false;
                 btn_stop.Enabled = true;
 
                 List<string> searchTerms = txt_searchterm.Text.Split(';').ToList<string>();
