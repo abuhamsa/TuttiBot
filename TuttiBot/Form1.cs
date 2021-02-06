@@ -45,6 +45,8 @@ namespace TuttiBot
                 grp_provider.Enabled = false;
                 txt_interval.Enabled = false;
                 txt_searchterm.Enabled = false;
+                txt_api.Enabled = false;
+                btn_setapi = false;
                 btn_stop.Enabled = true;
 
                 List<string> searchTerms = txt_searchterm.Text.Split(';').ToList<string>();
@@ -146,6 +148,8 @@ namespace TuttiBot
             grp_provider.Enabled = true;
             txt_interval.Enabled = true;
             txt_searchterm.Enabled = true;
+            txt_api.Enabled = true;
+            btn_setapi.Enabled = true;
             btn_stop.Enabled = false;
         }
 
