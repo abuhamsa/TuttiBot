@@ -47,7 +47,9 @@ namespace TuttiBot
                 txt_searchterm.Enabled = false;
                 txt_api.Enabled = false;
                 btn_setapi.Enabled= false;
-                btn_stop.Enabled = true;
+                txt_plz.Enabled = false;
+                txt_api.Enabled = false;
+                btn_stop.Enabled = false;
 
                 List<string> searchTerms = txt_searchterm.Text.Split(';').ToList<string>();
 
@@ -57,7 +59,19 @@ namespace TuttiBot
 
                     txt_log.AppendText(DateTime.Now.ToString("HH:mm:ss") + " - START SEARCH FOR " + searchTerm + "\r\n");
                     //CREATES A TUTTIPARSER OBJECT WITH THE CURRENT SEARCHTERM
-                    TuttiParser tuttiParser = new TuttiParser("https://www.tutti.ch/ganze-schweiz/angebote?q=" + searchTerm);
+                    string tuttiSearchURL = "https://www.tutti.ch/ganze-schweiz/angebote?q=" + searchTerm;
+                    if (txt_plz.Text != "")
+                    {   if (txt_radius.Text == "")
+                        {
+                            tuttiSearchURL += "&radius=5&";
+                        }
+                        else {
+                            tuttiSearchURL += "&radius="+txt_radius.Text+"&";
+
+                        }
+                        tuttiSearchURL += "zipcode=" + txt_plz.Text;
+                    }
+                    TuttiParser tuttiParser = new TuttiParser(tuttiSearchURL);
 
                     //CREATES A LIST OF OFFERS FROM THE TUTTIPARSER OBJECT
 
@@ -150,6 +164,8 @@ namespace TuttiBot
             txt_searchterm.Enabled = true;
             txt_api.Enabled = true;
             btn_setapi.Enabled = true;
+            txt_plz.Enabled = true;
+            txt_radius.Enabled = true;
             btn_stop.Enabled = false;
         }
 
@@ -206,5 +222,6 @@ namespace TuttiBot
             }
              
         }
+
     }
 }

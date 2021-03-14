@@ -52,6 +52,11 @@
             this.txt_api = new System.Windows.Forms.TextBox();
             this.lbl_api = new System.Windows.Forms.Label();
             this.btn_setapi = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txt_plz = new System.Windows.Forms.TextBox();
+            this.txt_radius = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.grp_provider.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -122,7 +127,7 @@
             this.grp_provider.Controls.Add(this.rbtn_pushover);
             this.grp_provider.Location = new System.Drawing.Point(16, 53);
             this.grp_provider.Name = "grp_provider";
-            this.grp_provider.Size = new System.Drawing.Size(288, 66);
+            this.grp_provider.Size = new System.Drawing.Size(143, 66);
             this.grp_provider.TabIndex = 6;
             this.grp_provider.TabStop = false;
             this.grp_provider.Text = "Provider:";
@@ -251,11 +256,56 @@
             this.btn_setapi.UseVisualStyleBackColor = true;
             this.btn_setapi.Click += new System.EventHandler(this.btn_setapi_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(127, 54);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 13);
+            this.label3.TabIndex = 16;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(161, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "PLZ:";
+            // 
+            // txt_plz
+            // 
+            this.txt_plz.Location = new System.Drawing.Point(205, 62);
+            this.txt_plz.Name = "txt_plz";
+            this.txt_plz.Size = new System.Drawing.Size(100, 20);
+            this.txt_plz.TabIndex = 18;
+            // 
+            // txt_radius
+            // 
+            this.txt_radius.Location = new System.Drawing.Point(205, 92);
+            this.txt_radius.Name = "txt_radius";
+            this.txt_radius.Size = new System.Drawing.Size(100, 20);
+            this.txt_radius.TabIndex = 20;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(161, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Radius:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 309);
+            this.Controls.Add(this.txt_radius);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txt_plz);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btn_setapi);
             this.Controls.Add(this.lbl_api);
             this.Controls.Add(this.txt_api);
@@ -310,6 +360,11 @@
         private System.Windows.Forms.TextBox txt_api;
         private System.Windows.Forms.Label lbl_api;
         private System.Windows.Forms.Button btn_setapi;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txt_plz;
+        private System.Windows.Forms.TextBox txt_radius;
+        private System.Windows.Forms.Label label5;
     }
 }
 
