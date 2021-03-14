@@ -48,6 +48,7 @@ namespace TuttiBot
                 txt_api.Enabled = false;
                 btn_setapi.Enabled= false;
                 txt_plz.Enabled = false;
+                txt_radius.Enabled = false;
                 txt_api.Enabled = false;
                 btn_stop.Enabled = false;
 
